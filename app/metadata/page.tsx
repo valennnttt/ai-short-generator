@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useState, useEffect } from "react";
 import AppShell from "@/components/layout/AppShell";
 import { useSearchParams } from "next/navigation";
@@ -8,8 +10,8 @@ export default function MetadataPage() {
   const searchParams = useSearchParams();
 
   const [title, setTitle] = useState("");
-const [description, setDescription] = useState("");
-const [tags, setTags] = useState("");
+  const [description, setDescription] = useState("");
+  const [tags, setTags] = useState("");
   const [language, setLanguage] = useState<"id" | "en">("id");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -18,11 +20,13 @@ const [tags, setTags] = useState("");
   useEffect(() => {
     const qTitle = searchParams.get("title");
     const qCategory = searchParams.get("category");
-  
+
     if (qTitle) {
       setTitle(qTitle);
       setDescription(
-        `Video short dengan ide: ${qTitle}${qCategory ? ` (${qCategory})` : ""}. Sesuaikan deskripsi ini dengan gaya kontenmu.`
+        `Video short dengan ide: ${qTitle}${
+          qCategory ? ` (${qCategory})` : ""
+        }. Sesuaikan deskripsi ini dengan gaya kontenmu.`
       );
       setTags("short, shorts, tiktok, youtube shorts");
     }

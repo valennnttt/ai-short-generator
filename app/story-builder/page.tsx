@@ -1,5 +1,7 @@
 "use client";
 
+export const dynamic = "force-dynamic";
+
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import AppShell from "@/components/layout/AppShell";
@@ -31,7 +33,7 @@ export default function StoryBuilderPage() {
     setLoading(true);
     setErrorMsg(null);
     setOutput("");
-  
+
     try {
       const res = await fetch("/api/generate-script", {
         method: "POST",
@@ -47,10 +49,10 @@ export default function StoryBuilderPage() {
           category,
         }),
       });
-  
+
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || "Gagal generate cerita.");
-  
+
       setOutput(data.story || "Tidak ada naskah yang diterima dari server.");
     } catch (err: any) {
       setErrorMsg(err.message || "Terjadi kesalahan.");
@@ -94,69 +96,102 @@ export default function StoryBuilderPage() {
 
           {/* TEMA → SELECT */}
           <div>
-  <label className="font-bold text-xs uppercase">Tema</label>
-  <div className="flex flex-wrap gap-2 mt-1">
-    {["Action", "Comedy", "Horror", "Drama", "Mystery", "Adventure", "Slice of Life", "Education"].map((t) => (
-      <button
-        key={t}
-        type="button"
-        onClick={() => setTheme(t)}
-        className={`px-3 py-2 border-2 border-black text-[11px] font-bold uppercase shadow-[3px_3px_0_0_rgba(0,0,0,1)]
-          ${theme === t ? "bg-black text-[#ffd84f]" : "bg-white hover:bg-[#ffecc1]"}`}
-      >
-        {t}
-      </button>
-    ))}
-  </div>
-</div>
+            <label className="font-bold text-xs uppercase">Tema</label>
+            <div className="flex flex-wrap gap-2 mt-1">
+              {[
+                "Action",
+                "Comedy",
+                "Horror",
+                "Drama",
+                "Mystery",
+                "Adventure",
+                "Slice of Life",
+                "Education",
+              ].map((t) => (
+                <button
+                  key={t}
+                  type="button"
+                  onClick={() => setTheme(t)}
+                  className={`px-3 py-2 border-2 border-black text-[11px] font-bold uppercase shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+          ${
+            theme === t
+              ? "bg-black text-[#ffd84f]"
+              : "bg-white hover:bg-[#ffecc1]"
+          }`}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* JUMLAH CLIP → SELECT */}
           <div>
-  <label className="font-bold text-xs uppercase">Jumlah Clip</label>
-  <div className="flex flex-wrap gap-2 mt-1">
-    {["4", "6", "8", "10", "12"].map((c) => (
-      <button
-        key={c}
-        type="button"
-        onClick={() => setClips(c)}
-        className={`px-3 py-2 border-2 border-black text-[11px] font-bold uppercase shadow-[3px_3px_0_0_rgba(0,0,0,1)]
-          ${clips === c ? "bg-black text-[#ffd84f]" : "bg-white hover:bg-[#ffecc1]"}`}
-      >
-        {c} Clip
-      </button>
-    ))}
-  </div>
-</div>
+            <label className="font-bold text-xs uppercase">Jumlah Clip</label>
+            <div className="flex flex-wrap gap-2 mt-1">
+              {["4", "6", "8", "10", "12"].map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() => setClips(c)}
+                  className={`px-3 py-2 border-2 border-black text-[11px] font-bold uppercase shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+          ${
+            clips === c
+              ? "bg-black text-[#ffd84f]"
+              : "bg-white hover:bg-[#ffecc1]"
+          }`}
+                >
+                  {c} Clip
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* GAYA VISUAL → SELECT */}
           <div>
-  <label className="font-bold text-xs uppercase">Gaya Visual</label>
-  <div className="flex flex-wrap gap-2 mt-1">
-    {["Blocky 3D", "Anime", "Pixel Art", "Realistic", "Cartoon", "Cinematic", "Minimalist"].map((s) => (
-      <button
-        key={s}
-        type="button"
-        onClick={() => setStyle(s)}
-        className={`px-3 py-2 border-2 border-black text-[11px] font-bold uppercase shadow-[3px_3px_0_0_rgba(0,0,0,1)]
-          ${style === s ? "bg-black text-[#ffd84f]" : "bg-white hover:bg-[#ffecc1]"}`}
-      >
-        {s}
-      </button>
-    ))}
-  </div>
-</div>
+            <label className="font-bold text-xs uppercase">Gaya Visual</label>
+            <div className="flex flex-wrap gap-2 mt-1">
+              {[
+                "Blocky 3D",
+                "Anime",
+                "Pixel Art",
+                "Realistic",
+                "Cartoon",
+                "Cinematic",
+                "Minimalist",
+              ].map((s) => (
+                <button
+                  key={s}
+                  type="button"
+                  onClick={() => setStyle(s)}
+                  className={`px-3 py-2 border-2 border-black text-[11px] font-bold uppercase shadow-[3px_3px_0_0_rgba(0,0,0,1)]
+          ${
+            style === s
+              ? "bg-black text-[#ffd84f]"
+              : "bg-white hover:bg-[#ffecc1]"
+          }`}
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* Gerakan kamera (sudah select, tetap) */}
           <div>
-  <label className="font-bold text-xs uppercase">Gerakan Kamera</label>
+            <label className="font-bold text-xs uppercase">
+              Gerakan Kamera
+            </label>
 
-  <div className="flex flex-wrap gap-2 mt-1">
-    {["Static Shot", "Camera Movement"].map((c) => (
-      <button
-        key={c}
-        type="button"
-        onClick={() => setCamera(c as "Static Shot" | "Camera Movement")}
-        className={`
+            <div className="flex flex-wrap gap-2 mt-1">
+              {["Static Shot", "Camera Movement"].map((c) => (
+                <button
+                  key={c}
+                  type="button"
+                  onClick={() =>
+                    setCamera(c as "Static Shot" | "Camera Movement")
+                  }
+                  className={`
           px-3 
           py-2 
           border-2 
@@ -165,14 +200,18 @@ export default function StoryBuilderPage() {
           font-bold 
           uppercase 
           shadow-[3px_3px_0_0_rgba(0,0,0,1)]
-          ${camera === c ? "bg-black text-[#ffd84f]" : "bg-white hover:bg-[#ffecc1]"}
+          ${
+            camera === c
+              ? "bg-black text-[#ffd84f]"
+              : "bg-white hover:bg-[#ffecc1]"
+          }
         `}
-      >
-        {c}
-      </button>
-    ))}
-  </div>
-</div>
+                >
+                  {c}
+                </button>
+              ))}
+            </div>
+          </div>
 
           {/* Tombol */}
           <button
