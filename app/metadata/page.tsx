@@ -2,11 +2,12 @@
 
 export const dynamic = "force-dynamic";
 
+import { Suspense } from "react";
 import { useState, useEffect } from "react";
 import AppShell from "@/components/layout/AppShell";
 import { useSearchParams } from "next/navigation";
 
-export default function MetadataPage() {
+function MetadataContent() {
   const searchParams = useSearchParams();
 
   const [title, setTitle] = useState("");
@@ -192,5 +193,13 @@ export default function MetadataPage() {
         </div>
       </div>
     </AppShell>
+  );
+}
+
+export default function MetadataPageWrapper() {
+  return (
+    <Suspense fallback={<div className="p-4 text-xs">Loading metadata...</div>}>
+      <MetadataContent />
+    </Suspense>
   );
 }

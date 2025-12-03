@@ -2,11 +2,12 @@
 
 export const dynamic = "force-dynamic";
 
+import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
 import AppShell from "@/components/layout/AppShell";
 
-export default function StoryBuilderPage() {
+function StoryBuilderContent() {
   const searchParams = useSearchParams();
   const initialTitle = searchParams.get("title") || "";
   const category = searchParams.get("category") || "General";
@@ -177,7 +178,7 @@ export default function StoryBuilderPage() {
             </div>
           </div>
 
-          {/* Gerakan kamera (sudah select, tetap) */}
+          {/* Gerakan kamera */}
           <div>
             <label className="font-bold text-xs uppercase">
               Gerakan Kamera
@@ -241,5 +242,15 @@ export default function StoryBuilderPage() {
         </div>
       </div>
     </AppShell>
+  );
+}
+
+export default function StoryBuilderPage() {
+  return (
+    <Suspense
+      fallback={<div className="p-4 text-xs">Loading story builder...</div>}
+    >
+      <StoryBuilderContent />
+    </Suspense>
   );
 }
