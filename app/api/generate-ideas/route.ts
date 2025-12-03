@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
+type Volume = "High" | "Medium" | "Low";
+
 const genAI = new GoogleGenerativeAI(process.env.GOOGLE_API_KEY!);
 const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 
@@ -11,8 +13,11 @@ export async function POST(req: NextRequest) {
       keyword,
       region,
       timeRange,
-    }: { keyword: string; region: "id" | "us"; timeRange: "1d" | "7d" | "30d" } =
-      body;
+    }: {
+      keyword: string;
+      region: "id" | "us";
+      timeRange: "1d" | "7d" | "30d";
+    } = body;
 
     if (!keyword) {
       return NextResponse.json(
