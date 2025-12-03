@@ -50,9 +50,7 @@ export default function NicheFinderForm() {
 
       const data = await res.json();
       if (!res.ok) {
-        throw new Error(
-          data?.error || "Gagal menghubungi API generate-ideas."
-        );
+        throw new Error(data?.error || "Gagal menghubungi API generate-ideas.");
       }
 
       setResults(Array.isArray(data.ideas) ? data.ideas : []);
@@ -70,7 +68,7 @@ export default function NicheFinderForm() {
       alert("Kamu belum login.");
       return;
     }
-  
+
     try {
       await addDoc(collection(db, "users", user.uid, "ideas"), {
         title: idea.idea,
@@ -81,11 +79,11 @@ export default function NicheFinderForm() {
         timeRange,
         createdAt: serverTimestamp(),
       });
-  
+
       alert("Ide disimpan ke menu Kelola Ide ✅");
     } catch (err: any) {
       console.error("Gagal save ke Firestore:", err);
-  
+
       if (err.code === "permission-denied") {
         alert(
           "Gagal menyimpan ide (permission-denied).\n\n" +
@@ -124,9 +122,7 @@ export default function NicheFinderForm() {
     <div className="grid md:grid-cols-[320px,1fr] gap-4 md:gap-6">
       {/* FORM KIRI */}
       <div className="border-4 border-black bg-[#fffdf5] p-4 shadow-[6px_6px_0_0_rgba(0,0,0,1)]">
-        <h2 className="font-extrabold text-sm uppercase mb-1">
-          Temukan Ide
-        </h2>
+        <h2 className="font-extrabold text-sm uppercase mb-1">Temukan Ide</h2>
         <p className="text-[11px] mb-4">
           Gunakan formulir di bawah ini untuk menemukan niche berdasarkan kata
           kunci atau video yang sedang viral. Konfigurasikan wilayah dan waktu
@@ -272,7 +268,8 @@ export default function NicheFinderForm() {
             </p>
             <p>
               Setelah itu klik tombol{" "}
-              <b>"Cari Niche / Video Viral"</b> untuk meminta ide dari AI.
+              <b>&quot;Cari Niche / Video Viral&quot;</b> untuk meminta ide dari
+              AI.
             </p>
           </div>
         )}
